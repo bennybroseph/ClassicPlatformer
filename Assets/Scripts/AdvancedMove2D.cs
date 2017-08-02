@@ -22,7 +22,6 @@ public class AdvancedMove2D : MonoBehaviour
     private bool m_IsGrounded;
     private bool m_Jumping;
 
-    private Vector2 originalCenterOfMass;
     private float originalRotationZ;
 
     private int groundedHash = Animator.StringToHash("Grounded");
@@ -35,7 +34,6 @@ public class AdvancedMove2D : MonoBehaviour
         animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
 
-        originalCenterOfMass = rigidbody.centerOfMass;
         originalRotationZ = transform.localEulerAngles.z;
     }
 

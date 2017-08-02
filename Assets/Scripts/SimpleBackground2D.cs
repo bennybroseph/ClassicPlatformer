@@ -19,5 +19,9 @@ public class SimpleBackground2D : MonoBehaviour
         transform.localPosition -= (Camera.main.transform.position - previousPosition) * speed;
 
         previousPosition = Camera.main.transform.position;
+
+        var viewPort = Camera.main.WorldToViewportPoint(transform.position);
+        if (viewPort.x > 1.7f || viewPort.x < -0.7f)
+            transform.localPosition = new Vector3(0f, transform.localPosition.y);
     }
 }

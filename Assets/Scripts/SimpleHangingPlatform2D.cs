@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class SimpleHangingPlatform2D : MonoBehaviour
 {
-    public Rigidbody2D rigidbody2D;
-
     public bool waitForCollision;
+    public float speed = 2f;
+    public float maxSpeed = 10f;
 
+    private Vector3 m_Velocity;
     // Use this for initialization
     private void Start()
     {
+
+    }
+
+    private void Update()
+    {
         if (waitForCollision)
-            rigidbody2D.isKinematic = true;
+            return;
+
+        m_Velocity += Vector3.left * speed * Time.deltaTime;
+        m_Velocity = Vector3.ClampMagnitude(m_Velocity, maxSpeed);
+
+        transform.localPosition += m_Velocity * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision2D)
@@ -20,7 +31,6 @@ public class SimpleHangingPlatform2D : MonoBehaviour
         if (!waitForCollision)
             return;
 
-        rigidbody2D.isKinematic = false;
         waitForCollision = false;
     }
 }

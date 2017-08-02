@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class SimplePlatform2D : MonoBehaviour
@@ -13,8 +10,6 @@ public class SimplePlatform2D : MonoBehaviour
 
     public Vector2 movement;
 
-    private Rigidbody2D rigidbody;
-
     private Vector3 m_OriginalPosition;
 
     private bool m_Delayed;
@@ -23,8 +18,6 @@ public class SimplePlatform2D : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-
         m_OriginalPosition = transform.localPosition;
 
         if (startDelay > 0f)
@@ -39,15 +32,14 @@ public class SimplePlatform2D : MonoBehaviour
         if (!m_Delayed)
             return;
 
-        var newPosition =
+        var oldPosition = transform.localPosition;
+        transform.localPosition =
             Vector3.MoveTowards(
                 transform.localPosition,
                 m_OriginalPosition + (!m_Reverse ? (Vector3)movement : Vector3.zero),
                 speed * Time.deltaTime);
 
-        rigidbody.MovePosition(newPosition);
-
-        if (newPosition == transform.localPosition)
+        if (oldPosition == transform.localPosition)
         {
             if (delay > 0f)
             {

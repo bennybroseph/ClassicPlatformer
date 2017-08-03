@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4759228677438774}
   - component: {fileID: 33151540567437860}
   - component: {fileID: 23172734285689832}
+  - component: {fileID: 61899898249658072}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -36,7 +37,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4353815803644130}
-  - component: {fileID: 61048177953657210}
   - component: {fileID: 50554730302192266}
   - component: {fileID: 114348956341902254}
   m_Layer: 0
@@ -86,7 +86,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a4399bc68c429bd4fb3114d41d09fc41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,19 +132,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61048177953657210
+--- !u!61 &61899898249658072
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1839407233985138}
+  m_GameObject: {fileID: 1439947941210482}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -169,4 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  startDelay: 0
+  delay: 0
   movement: {x: 0, y: 0}

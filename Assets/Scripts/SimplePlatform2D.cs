@@ -18,6 +18,8 @@ public class SimplePlatform2D : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        GetComponent<Rigidbody2D>().sleepMode = RigidbodySleepMode2D.NeverSleep;
+
         m_OriginalPosition = transform.localPosition;
 
         if (startDelay > 0f)

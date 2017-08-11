@@ -19,7 +19,7 @@ public class SimpleUserControl2D : MonoBehaviour
 
         var shoot = Input.GetKeyDown(KeyCode.Return);
 
-        var crouch = Input.GetKey(KeyCode.C);
+        var crouch = Input.GetAxisRaw("Vertical") < 0f;
         var jump = Input.GetButton("Jump");
 
         if (Input.GetKey(KeyCode.LeftShift))

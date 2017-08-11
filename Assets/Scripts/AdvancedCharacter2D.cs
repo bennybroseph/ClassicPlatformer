@@ -19,6 +19,8 @@ public class AdvancedCharacter2D : MonoBehaviour
     [SerializeField]
     private Transform m_JumpingShotPoint;
 
+    private int m_Direction;
+
     [SerializeField, Space]
     private float m_JumpForce = 5f;
     [SerializeField]
@@ -47,7 +49,6 @@ public class AdvancedCharacter2D : MonoBehaviour
     private Coroutine m_StopShootingCoroutine;
 
     private readonly int m_GroundedHash = Animator.StringToHash("Grounded");
-    private readonly int m_ShootingHash = Animator.StringToHash("Shooting");
     private readonly int m_CrouchingHash = Animator.StringToHash("Crouching");
     private readonly int m_VelocityHash = Animator.StringToHash("Velocity");
 
@@ -63,6 +64,9 @@ public class AdvancedCharacter2D : MonoBehaviour
 
     public void Move(float h, bool shoot, bool crouch, bool jump)
     {
+        if (Mathf.Abs(h) > 0f)
+            m_Direction = (int)h;
+
         CheckGrounded();
 
         if (m_IsGrounded)
@@ -80,7 +84,7 @@ public class AdvancedCharacter2D : MonoBehaviour
                 Quaternion.identity);
 
         newBullet.parent = gameObject;
-        newBullet.direction = m_Renderer.flipX ? -transform.right : transform.right;
+        newBullet.direction = m_Direction == 1 ? transform.right : -transform.right;
 
         m_ShootTime = 0f;
         if (m_StopShootingCoroutine == null)
@@ -152,7 +156,8 @@ public class AdvancedCharacter2D : MonoBehaviour
         foreach (var ray2D in GetRay2Ds())
         {
             var raycastHit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, 2f * groundCheckHeight);
-            if (raycastHit2D && raycastHit2D.collider.isTrigger)
+            if (!raycastHit2D || raycastHit2D.collider.gameObject == gameObject ||
+                raycastHit2D.collider.isTrigger)
                 continue;
 
             m_IsGrounded |= raycastHit2D;
@@ -177,17 +182,13 @@ public class AdvancedCharacter2D : MonoBehaviour
         if (m_Renderer == null)
             return;
 
-        if (m_IsGrounded && Mathf.Abs(m_Rigidbody.velocity.x) >= 0.1f)
+        var flipX = m_Direction < 0;
+        if (m_Renderer.flipX != flipX)
         {
-            var flipX = m_Rigidbody.velocity.x < 0f;
-            if (m_Renderer.flipX != flipX)
-            {
-                m_Renderer.flipX = flipX;
-                foreach (Transform child in transform)
-                    child.transform.localPosition =
-                        new Vector2(-child.transform.localPosition.x, child.transform.localPosition.y);
-            }
-
+            m_Renderer.flipX = flipX;
+            foreach (Transform child in transform)
+                child.transform.localPosition =
+                    new Vector2(-child.transform.localPosition.x, child.transform.localPosition.y);
         }
     }
 

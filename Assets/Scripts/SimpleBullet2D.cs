@@ -36,7 +36,13 @@ public class SimpleBullet2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider2D)
     {
-        if (collider2D.gameObject != parent && !collider2D.GetComponent<SimpleBullet2D>())
-            Destroy(gameObject);
+        if (collider2D.gameObject == parent || collider2D.isTrigger && !collider2D.GetComponent<Health>())
+            return;
+
+        var health = collider2D.GetComponent<Health>();
+        if (health)
+            health.health -= 1f;
+
+        Destroy(gameObject);
     }
 }
